@@ -43,12 +43,13 @@ def connect():
     try:
         connection = psycopg2.connect(user = user,
                                     password = password,
-                                    host = "127.0.0.1",
-                                    port = "5432",
+                                    host = host,
+                                    port = port,
                                     database = db)
+        return connection
     except (Exception, psycopg2.Error) as error :
         print ("Error while connecting to PostgreSQL", error)
-    return connection
+    
 
     
                 

@@ -1,5 +1,5 @@
 from database import setup_db
-from logic import checkin_time
+from logic import checkin_time,get_ondate
 from user import add_user, get_all_users, get_user, check_exists
 from email_validator import validate_email, EmailNotValidError
 from   fastapi import FastAPI, Request, Response, HTTPException
@@ -8,11 +8,9 @@ import json
 
 app = FastAPI()
 
-
 @app.get('/api/users')
 def fetch_all():
     return json.dumps(get_all_users())
-
 
 @app.get('/api/get')
 def get(id:int = 0):
@@ -62,6 +60,11 @@ def checkin(id:int = 0):
         return [True,current]
     else:
         return HTTPException(status_code=500,detail='The number of the checkout can not be less than 0')
+
+@app.get('/api/get_ondate')
+def get_all_ondate(start:str,end:str):
+    return get_ondate(start,end)
+
 
 if __name__ == "__main__":
     setup_db()
