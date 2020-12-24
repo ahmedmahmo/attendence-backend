@@ -5,6 +5,7 @@ from email_validator import validate_email, EmailNotValidError
 from   fastapi import FastAPI, Request, Response, HTTPException
 import uvicorn
 import json
+import os
 
 app = FastAPI()
 
@@ -65,8 +66,11 @@ def checkin(id:int = 0):
 def get_all_ondate(start:str,end:str):
     return get_ondate(start,end)
 
+host = os.environ.get('hostname -I')
+if host == None:
+    host = '127.0.0.1'
 
 if __name__ == "__main__":
     setup_db()
-    uvicorn.run(app)
+    uvicorn.run(app,host=host,port=8000)
     
