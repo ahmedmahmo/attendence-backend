@@ -23,12 +23,13 @@ def setup_db() -> psycopg2.connect:
     try:
         cursor = connection.cursor()
         create_user = '''CREATE TABLE IF NOT EXISTS users \
-            (ID INT PRIMARY KEY     NOT NULL, \
-            USERNAME           TEXT    NOT NULL, \
+            (ID BIGINT  PRIMARY KEY     NOT NULL, \
+            USERNAME           TEXT    NOT NULL UNIQUE, \
+            NAME TEXT NOT NULL , \
             EMAIL         TEXT); '''
         
         create_timetable = '''CREATE TABLE IF NOT EXISTS timestamps \
-            (ID INT    NOT NULL, \
+            (ID BIGINT    NOT NULL, \
             DATE  TIMESTAMP    NOT NULL, \
             STATE TEXT ); '''
         
@@ -49,9 +50,5 @@ def connect():
         return connection
     except (Exception, psycopg2.Error) as error :
         print ("Error while connecting to PostgreSQL", error)
-    
-
-    
-                
 
     
